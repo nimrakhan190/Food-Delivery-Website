@@ -37,8 +37,10 @@ const Card2 = ({name,id,price,image,qty}) => {
       </div>
 
       {/* Price & Delete */}
-      <div className='flex flex-row sm:flex-col justify-between items-center sm:items-end gap-8'>
-        <span className='text-xl text-green-400 font-semibold whitespace-nowrap'>Rs {price}/-</span>
+      <div className='flex flex-row sm:flex-col justify-between 
+      items-center sm:items-end gap-8'>
+        <span className='text-xl text-green-400 font-semibold 
+        whitespace-nowrap'>Rs {price}/-</span>
         <RiDeleteBinLine className='w-[30px] h-[30px] text-red-400 cursor-pointer'
         onClick={() => dispatch(RemoveItem(id))}/>
       </div>

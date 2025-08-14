@@ -7,6 +7,7 @@ import { dataContext } from '../context/UserContext'
 import { RxCross1 } from "react-icons/rx";
 import Card2 from '../components/Card2'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const Home = () => {
   let {cate, setCate, input, showCart, setShowCart } = useContext(dataContext);
@@ -49,18 +50,21 @@ let total = Math.floor(subtotal + deliveryFee + taxes);
       </div>:null}
       
       <div className='w-full flex flex-wrap justify-center items-center gap-5 p-5'>
-        {cate.map((item) => {
-          return (
-            <Card 
-              key={item.id}
-              name={item.food_name}
-              image={item.food_image}
-              id={item.id}
-              price={item.price}
-              type={item.food_type}
-            />
-          )
-        })}
+        {cate.length > 1 ? (
+  cate.map(item => (
+    <Card
+      key={item.id}
+      name={item.food_name}
+      image={item.food_image}
+      id={item.id}
+      price={item.price}
+      type={item.food_type}
+    />
+  ))
+) : (
+  <div className='text-2xl font-semibold text-gray-600 mt-9'>No dish Found</div>
+)}
+
       </div>
 
       <div className={`w-full md:w-[40vw] h-[100%] fixed top-0 right-0 bg-white shadow-xl p-6 
@@ -70,6 +74,8 @@ let total = Math.floor(subtotal + deliveryFee + taxes);
 <RxCross1 className='w-[30px] h-[30px] text-green-400 text-[18px] font-semibold
 cursor-pointer hover:text-gray-600' onClick={() => setShowCart(false)}/>
         </header>
+        {items.length>0?
+        <>
        <div className='w-full mt-9 flex flex-col gap-8 '>
         {items.map((item)=>(
           <Card2 name={item.name} price={item.price} image={item.image} id={item.id} qty={item.qty}/>
@@ -96,8 +102,14 @@ cursor-pointer hover:text-gray-600' onClick={() => setShowCart(false)}/>
 </div>
 <button className='w-[80%] p-3 rounded-lg bg-green-200 
       cursor-pointer text-gray-700 hover:bg-green-300 
-      transition-all'>Place Order</button>
+      transition-all' onClick={()=>{
+        toast.success("Order Placed Successfully");
+      }}>Place Order</button>
+      </>
+      :<span className='text-2xl font-semibold text-gray-600 mt-9'>No Items in Cart</span>}
+        
        </div>
+       
       </div>
   )
 }
